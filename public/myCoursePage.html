@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmbaTuLearn - My Courses</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary py-3">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <img style="width: 40px; height: auto;" src="aset/Logo ambatulearn.png" alt="Logo">
+                <a class="navbar-brand ms-2" href="#" style="color: #6C0101; font-weight: bold;">AmbaTuLearn</a>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courseOption.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="myCoursePage.html">My Courses</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex">
+                    <a class="btn me-2" style="color: black;" id="logout-btn">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- My Courses Section -->
+    <section class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">My <span style="color: #6C0101;">Courses</span></h2>
+            <p>Here are the courses you have purchased:</p>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="my-course-container">
+            <!-- Kursus yang dibeli akan dimuat di sini -->
+        </div>
+    </section>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script untuk Memuat Courses yang Dibeli -->
+    <script>
+        const myCourseContainer = document.getElementById('my-course-container');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        async function loadMyCourses() {
+            try {
+                const response = await fetch('http://localhost:3000/purchased-courses', {
+                    method: 'GET',
+                    credentials: 'include' // Mengirimkan session cookie
+                });
+
+                if (response.status === 403) {
+                    alert('You must be logged in to view your courses.');
+                    window.location.href = 'loginPage.html'; // Redirect ke halaman login
+                    return;
+                }
+
+                const courses = await response.json();
+
+                if (courses.length === 0) {
+                    myCourseContainer.innerHTML = '<p>No courses found. Please purchase courses first.</p>';
+                    return;
+                }
+
+                courses.forEach(course => {
+                    const courseCard = `
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="${course.image_url}" class="card-img-top" alt="${course.title}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${course.title}</h5>
+                                    <p class="card-text"><strong>Description:</strong> ${course.description}</p>
+                                    <p class="card-text">
+                                        <span class="badge ${course.isPremium ? 'bg-warning text-dark' : 'bg-secondary'}">
+                                            ${course.isPremium ? 'Premium Course' : 'Free Course'}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    myCourseContainer.innerHTML += courseCard;
+                });
+            } catch (error) {
+                console.error('Error fetching user courses:', error);
+                myCourseContainer.innerHTML = '<p>Failed to load courses. Please try again later.</p>';
+            }
+        }
+
+        // Fungsi untuk logout
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await fetch('http://localhost:3000/logout', {
+                    method: 'POST',
+                    credentials: 'include' // Mengirimkan session cookie
+                });
+                alert('Logout successful.');
+                window.location.href = 'loginPage.html'; // Redirect ke halaman login
+            } catch (error) {
+                console.error('Error during logout:', error);
+                alert('Failed to logout. Please try again.');
+            }
+        });
+
+        // Panggil fungsi untuk memuat courses yang dibeli saat halaman dimuat
+        window.onload = loadMyCourses;
+    </script>
+</body>
+</html>

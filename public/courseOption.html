@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmbaTuLearn - Featured Courses</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary py-3">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <img style="width: 40px; height: auto;" src="aset/Logo ambatulearn.png" alt="Logo">
+                <a class="navbar-brand ms-2" href="#" style="color: #6C0101; font-weight: bold;">AmbaTuLearn</a>
+            </div>
+    
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="courseOption.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="myCoursePage.html">My Courses</a>
+                    </li>
+                </ul>
+    
+                <div class="d-flex">
+                    <a class="btn me-2" style="color: black;" href="loginPage.html">Login</a>
+                    <a class="btn btn-primary" href="signupPage.html">Signup</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Featured Courses Section -->
+    <section class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">Featured <span style="color: #6C0101;">Courses</span></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore veniam...</p>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="course-container">
+            <!-- Kursus akan dimuat secara dinamis melalui JavaScript -->
+        </div>
+    </section>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script untuk Memuat Courses -->
+    <script>
+        const courseContainer = document.getElementById('course-container');
+
+        async function loadCourses() {
+            try {
+                const response = await fetch('http://localhost:3000/courses'); // Ganti dengan endpoint backend Anda
+                const courses = await response.json();
+
+                courses.forEach(course => {
+                    // Hitung harga diskon jika ada diskon
+                    const discountPrice = course.discount > 0 
+                        ? (course.price * (1 - course.discount / 100)).toFixed(2) 
+                        : course.price;
+
+                    const courseCard = `
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="${course.image_url}" class="card-img-top" alt="${course.title}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${course.title}</h5>
+                                    <p class="card-text">
+                                        <strong>Price:</strong> 
+                                        ${course.discount > 0 
+                                            ? `<span class="text-muted" style="text-decoration: line-through;">$${course.price}</span> <span>$${discountPrice}</span>`
+                                            : `<span>$${course.price}</span>`
+                                        }
+                                        ${course.discount > 0 ? `<small class="text-danger"> (Discount: ${course.discount}%)</small>` : ''}
+                                    </p>
+                                    <p class="card-text"><strong>Description:</strong> ${course.description}</p>
+                                    <p class="card-text">
+                                        <span class="badge ${course.isPremium ? 'bg-warning text-dark' : 'bg-secondary'}">
+                                            ${course.isPremium ? 'Premium Course' : 'Free Course'}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    courseContainer.innerHTML += courseCard;
+                });
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            }
+        }
+
+        // Panggil fungsi untuk memuat courses saat halaman dimuat
+        window.onload = loadCourses;
+    </script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+body {
+    margin: 0;
+}
+
+.hero {
+    background: linear-gradient(90deg, #173f35, #8a2e24);
+    color: white;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+.hero-text {
+    max-width: 50%;
+}
+
+.hero img {
+    max-height: 500px;
+}
+
+.btn-primary {
+    background-color: #6C0101;
+    border-color: #6C0101;
+}
+
+.btn-outline-primary {
+    color: white;
+    border-color: #6C0101;
+}
+
+.body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #f8f9fa, #d1b3b3);
+    margin: 0;
+    padding: 0;
+}
+.navbar-brand {
+    color: #6C0101 !important;
+    font-weight: bold;
+}
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.card-title {
+    color: #333;
+}
+.card-text {
+    color: #666;
+}
+.btn-primary {
+    background-color: #6C0101;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #8a2e24;
+}
+.explore-btn {
+    background-color: #6C0101;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+.nav-link.active {
+    color: #6C0101 !important; /* Warna merah untuk link aktif */
+}
+
+/*Halaman Shop*/
+.shop-section {
+    background: linear-gradient(to bottom, #f8f9fa, #d1b3b3);
+    min-height: 92.4vh;
+}
+
+/* Form Container Styling */
+.form-container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+/* Form Control Styling */
+.form-control {
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+
+.form-control:focus {
+    border-color: #6C0101;
+    box-shadow: none;
+}
+
+/* Button Styling */
+.btn-shop {
+    background-color: #008C45;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-shop i {
+    margin-right: 5px;
+}
+
+.btn-shop:hover {
+    background-color: #006f35;
+}
+
+/*Halaman About*/
+.about-section {
+    background: linear-gradient(to bottom, #a6d3cb, #925555); /* Sesuaikan warna gradasi */
+    padding: 60px 0;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    min-height: 92.4vh;
+}
+
+.about-section h2 {
+    color: #000000;
+    font-weight: bold;
+}
+
+.about-section .text-muted {
+    color: #000000;
+}
+
+.about-section img {
+    border: 2px solid #333;
+    border-radius: 50%;
+    padding: 10px;
+    width: 80px;
+    height: 80px;
+}
+
+.about-section h5 {
+    color: #8a2e24;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.about-section p {
+    color: #000000;
+}
+
+/* Garis pemisah vertikal antar kolom (opsional) */
+.about-section .row .col-md-4:not(:last-child) {
+    border-right: 1px solid #000000;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #6C0101;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.course-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.course-item {
+    background: #f4f4f4;
+    padding: 15px;
+    margin: 10px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+
